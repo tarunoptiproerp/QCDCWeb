@@ -1,0 +1,217 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>QCDC</groupId>
+  <artifactId>QCDC</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>ru.stqa.selenium</groupId>
+			<artifactId>webdriver-factory</artifactId>
+			<version>4.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>3.141.59</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.testng/testng -->
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>7.4.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.aventstack/extentreports -->
+		<dependency>
+			<groupId>com.aventstack</groupId>
+			<artifactId>extentreports</artifactId>
+			<version>5.0.8</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.11.0</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<version>3.8.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.20</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>5.0.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi-excelant -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-excelant</artifactId>
+			<version>5.0.0</version>
+		</dependency>
+
+<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+<dependency>
+    <groupId>org.apache.logging.log4j</groupId>
+    <artifactId>log4j-core</artifactId>
+    <version>2.14.1</version>
+</dependency>
+
+<dependency>
+    <groupId>com.paulhammant</groupId>
+    <artifactId>ngwebdriver</artifactId>
+    <version>1.1.6</version>
+</dependency>
+
+
+	</dependencies>
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<filtering>true</filtering>
+			</testResource>
+		</testResources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<source>11</source>
+					<target>11</target>
+				</configuration>
+			</plugin>
+
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <!-- I don't specify version at all (Spring Boot can autoconfigure plugin version) -->
+        <executions>
+            <execution>
+                <!-- changed <id> to <phase>, but I don't know whether it's important or not. -->
+                <phase>integration-test</phase>
+                <!-- ... no changes here: the same as in the question ... -->
+            </execution>
+        </executions>
+    </plugin>
+</plugins>		
+		
+	</build>
+	<!-- profiles -->
+	<profiles>
+		<!-- browsers -->
+		<profile>
+			<id>firefox</id>
+			<properties>
+				<capabilities>/firefox.capabilities</capabilities>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<id>chrome</id>
+			<properties>
+				<capabilities>/chrome.capabilities</capabilities>
+			</properties>
+		</profile>
+		<profile>
+			<id>ie</id>
+			<properties>
+				<capabilities>/ie.capabilities</capabilities>
+			</properties>
+		</profile>
+		<profile>
+			<id>safari</id>
+			<properties>
+				<capabilities>/safari.capabilities</capabilities>
+			</properties>
+		</profile>
+		<profile>
+			<id>opera</id>
+			<properties>
+				<capabilities>/opera.capabilities</capabilities>
+			</properties>
+		</profile>
+		<!-- environments -->
+		<profile>
+			<id>localhost</id>
+			<properties>
+				<site.url>http://localhost/</site.url>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<id>devhost</id>
+			<properties>
+				<site.url>http://devhost/</site.url>
+			</properties>
+		</profile>
+		<profile>
+			<id>testhost</id>
+			<properties>
+				<site.url>http://testhost/</site.url>
+			</properties>
+		</profile>
+		<profile>
+			<id>prodhost</id>
+			<properties>
+				<site.url>http://prodhost.com/</site.url>
+			</properties>
+		</profile>
+		<!-- grid -->
+		<profile>
+			<id>nogrid</id>
+			<properties>
+				<grid.url></grid.url>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<id>grid</id>
+			<properties>
+				<grid.url>http://localhost:4444/wd/hub/</grid.url>
+			</properties>
+		</profile>
+	</profiles>
+</project>
